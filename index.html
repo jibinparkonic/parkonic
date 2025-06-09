@@ -16,20 +16,24 @@
 
 <script>
   function initMap() {
-    // Try HTML5 geolocation.
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         function (position) {
-          const pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+
+          // ✅ Log coordinates to the console
+          console.log("Latitude:", lat);
+          console.log("Longitude:", lng);
+
+          const pos = { lat, lng };
 
           const map = new google.maps.Map(document.getElementById("map"), {
             zoom: 15,
             center: pos,
           });
 
+          // You can use the newer AdvancedMarkerElement here if desired
           new google.maps.Marker({
             position: pos,
             map: map,
@@ -45,6 +49,7 @@
     }
   }
 </script>
+
 
 <!-- Replace YOUR_API_KEY with your actual key -->
 <script async defer
