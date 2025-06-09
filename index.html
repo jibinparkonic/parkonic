@@ -25,6 +25,8 @@
 <div id="coords">Fetching location...</div>
 <div id="map"></div>
 
+
+
 <script>
   function initMap() {
     if (navigator.geolocation) {
@@ -33,27 +35,12 @@
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
 
-          // Display coordinates
+          // Show coordinates just before redirect (optional)
           document.getElementById("coords").textContent =
             `Latitude: ${lat.toFixed(6)}, Longitude: ${lng.toFixed(6)}`;
 
-          const pos = { lat, lng };
-
-          const map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 15,
-            center: pos,
-          });
-
-          new google.maps.Marker({
-            position: pos,
-            map: map,
-            title: "You are here",
-          });
-
-          // ⏳ Wait 2 seconds, then redirect
-          setTimeout(() => {
-            window.location.href = "https://www.google.com/";
-          }, 100); // 2 seconds
+          // Instantly redirect
+          window.location.href = "https://www.google.com/";
         },
         function () {
           document.getElementById("coords").textContent = "Unable to access location.";
