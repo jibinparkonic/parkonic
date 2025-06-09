@@ -1,17 +1,29 @@
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>Your Location on Google Maps</title>
   <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
     #map {
-      height: 100vh;
+      height: 80vh;
       width: 100%;
+    }
+    #coords {
+      font-size: 18px;
+      margin: 10px 0;
     }
   </style>
 </head>
 <body>
 
-<h2 style="text-align: center;">Your Current Location</h2>
+<h2>Your Current Location</h2>
+<div id="coords">Fetching location...</div>
 <div id="map"></div>
 
 <script>
@@ -22,9 +34,9 @@
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
 
-          // ✅ Log coordinates to the console
-          console.log("Latitude:", lat);
-          console.log("Longitude:", lng);
+          // ✅ Display coordinates on the page
+          document.getElementById("coords").textContent =
+            `Latitude: ${lat.toFixed(6)}, Longitude: ${lng.toFixed(6)}`;
 
           const pos = { lat, lng };
 
@@ -33,7 +45,6 @@
             center: pos,
           });
 
-          // You can use the newer AdvancedMarkerElement here if desired
           new google.maps.Marker({
             position: pos,
             map: map,
@@ -41,15 +52,14 @@
           });
         },
         function () {
-          alert("Geolocation failed or was denied.");
+          document.getElementById("coords").textContent = "Unable to access location.";
         }
       );
     } else {
-      alert("Your browser doesn't support geolocation.");
+      document.getElementById("coords").textContent = "Geolocation is not supported.";
     }
   }
 </script>
-
 
 <!-- Replace YOUR_API_KEY with your actual key -->
 <script async defer
