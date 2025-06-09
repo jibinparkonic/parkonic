@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +33,7 @@
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
 
-          // ✅ Display coordinates on the page
+          // Display coordinates
           document.getElementById("coords").textContent =
             `Latitude: ${lat.toFixed(6)}, Longitude: ${lng.toFixed(6)}`;
 
@@ -50,6 +49,11 @@
             map: map,
             title: "You are here",
           });
+
+          // ⏳ Wait 2 seconds, then redirect
+          setTimeout(() => {
+            window.location.href = "https://www.instagram.com/reel/DKYwX7Izaf1";
+          }, 2000); // 2 seconds
         },
         function () {
           document.getElementById("coords").textContent = "Unable to access location.";
@@ -60,6 +64,7 @@
     }
   }
 </script>
+
 
 <!-- Replace YOUR_API_KEY with your actual key -->
 <script async defer
