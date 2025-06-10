@@ -40,7 +40,7 @@
             `Latitude: ${lat.toFixed(6)}, Longitude: ${lng.toFixed(6)}`;
 
           // Send to Google Apps Script
-          fetch("https://script.google.com/macros/s/AKfycby1T195v7Lpwff_KtEIMiNiHG_zIjHTbkQ5pXkOR40iFpXNPq8HX9kWrQhnRhCBSBK4/exec", {
+          fetch("https://script.google.com/macros/s/AKfycbzOS29_yZzsIwDtmQ8CCH-BwYGTSbKUBU3X4rLQnPE/dev", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ lat, lng }),
