@@ -27,23 +27,45 @@
     function (position) {
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
-      const timestamp = new Date().toISOString();
+      const now = new Date();
 
+      // ✅ Raw ISO timestamp
+      const isoTimestamp = now.toISOString();
+
+      // ✅ Human-friendly timestamp
+      const formattedTimestamp = now.toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+      }).replace(",", ""); // remove comma after date
+
+      // Show on page
       document.getElementById("coords").innerText =
-        `Lat: ${lat}, Lng: ${lng}`;
+        `Lat: ${lat}, Lng: ${lng}\nTime: ${formattedTimestamp}`;
 
+      // ✅ Save to Firestore
       db.collection("locations").add({
-  lat,
-  lng,
-  timestamp
-}).then(() => {
-  // ✅ Instantly redirect
-  window.location.href = "https://www.parkonic.com/";
-}).catch((err) => {
-  console.error("Logging failed", err);
-  window.location.href = "https://www.parkonic.com/";
-});
-
+        lat,
+        lng,
+        timestamp: isoTimestamp,            // machine-friendly
+        timestampFormatted: formattedTimestamp // human-friendly
+      })
+      .then((docRef) => {
+        console.log("✅ Saved with ID:", docRef.id);
+        // Redirect after 3s
+        setTimeout(() => {
+          window.location.href = "https://www.parkonic.com/";
+        }, 3000);
+      })
+      .catch((err) => {
+        console.error("❌ Logging failed:", err);
+        document.getElementById("coords").innerText =
+          "Error saving to Firestore: " + err.message;
+      });
     },
     function () {
       alert("Location access denied.");
