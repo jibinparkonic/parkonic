@@ -32,16 +32,16 @@
       document.getElementById("coords").innerText =
         `Lat: ${lat}, Lng: ${lng}`;
 
-      db.collection("locations").add({
+db.collection("locations").add({
   lat,
   lng,
   timestamp
-}).then(() => {
-  // ✅ Instantly redirect
-  window.location.href = "https://www.parkonic.com/";
+}).then((docRef) => {
+  console.log("✅ Added document with ID:", docRef.id);
+  document.getElementById("coords").innerText = "Saved to Firestore ✅";
 }).catch((err) => {
-  console.error("Logging failed", err);
-  window.location.href = "https://www.parkonic.com/";
+  console.error("❌ Logging failed:", err);
+  document.getElementById("coords").innerText = "Error: " + err.message;
 });
 
     },
